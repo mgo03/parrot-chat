@@ -1,4 +1,6 @@
 import {Provider} from 'jotai';
+import {AppRouterCacheProvider} from '@mui/material-nextjs/v13-appRouter';
+import {Box, CssBaseline, Toolbar} from '@mui/material';
 import {type ReactNode} from 'react';
 import type {Metadata} from 'next';
 import '../styles/globals.css';
@@ -17,10 +19,20 @@ const RootLayout = ({children}: RootLayoutProps) => {
   return (
     <html lang="ja">
       <body>
-        <Header />
-        <main style={{background: '#F1F3F7', width: '100%', height: '100vh'}}>
-          <Provider>{children}</Provider>
-        </main>
+        <CssBaseline />
+        <AppRouterCacheProvider>
+          <Header />
+          <Box
+            component="main"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+            }}
+          >
+            <Provider>{children}</Provider>
+          </Box>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

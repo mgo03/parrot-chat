@@ -1,6 +1,8 @@
 'use client';
 import React, {useState} from 'react';
 import {useAtom} from 'jotai';
+import SendIcon from '@mui/icons-material/Send';
+import {Box, Button, Input} from '@mui/material';
 import {sendMessageAtom} from '@/app/common/store/chat/chat';
 import {type ChatData} from '@/types/chat';
 
@@ -10,7 +12,7 @@ const ChatForm = (props: ChatFormProps) => {
   const [message, setMessage] = useState<string>('');
   const [, setSender] = useAtom(sendMessageAtom);
 
-  const sendMesage = async () => {
+  const sendMessage = async () => {
     if (!message) return;
 
     try {
@@ -35,17 +37,18 @@ const ChatForm = (props: ChatFormProps) => {
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
+    <Box
+      sx={{
+        position: 'sticky',
         bottom: 0,
         width: '100%',
-        padding: 20,
+        padding: 2,
         background: '#fff',
       }}
     >
-      <div style={{display: 'flex', gap: 10}}>
-        <input
+      <Box style={{display: 'flex', gap: 10}}>
+        <Input
+          disableUnderline
           type="text"
           placeholder="新しいチャットを送る..."
           style={{
@@ -60,27 +63,20 @@ const ChatForm = (props: ChatFormProps) => {
           onKeyDown={async (e) => {
             if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
               e.preventDefault();
-              await sendMesage();
+              await sendMessage();
             }
           }}
         />
-        <button
-          type="button"
-          style={{
-            padding: 10,
-            background: '#006BD6',
-            color: 'white',
-            borderRadius: 10,
-            border: 'none',
-          }}
+        <Button
+          variant="contained"
           onClick={async () => {
-            await sendMesage();
+            await sendMessage();
           }}
         >
-          送信
-        </button>
-      </div>
-    </div>
+          <SendIcon />
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

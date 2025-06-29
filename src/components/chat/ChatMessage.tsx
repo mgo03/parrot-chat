@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React, {useEffect, useState} from 'react';
 import {useAtom} from 'jotai';
+import {Box, Typography} from '@mui/material';
 import {sendMessageAtom} from '@/app/common/store/chat/chat';
 import {type ChatData} from '@/types/chat';
 
@@ -29,60 +30,63 @@ const ChatMessage = (props: ChatMessageProps) => {
   }, [sender, setSender]);
 
   return (
-    <div style={{padding: '30px 20px', height: '100%'}}>
+    <Box
+      sx={{
+        backgroundColor: '#F1F3F7',
+        padding: '20px 30px 0px 30px',
+        flexGrow: 1,
+      }}
+    >
       {inputMessage?.map((post) => {
         return (
-          <div key={post.id}>
+          <Box key={post.id}>
             {post.role === 'user' && (
-              <div
-                style={{
+              <Box
+                sx={{
                   display: 'flex',
-                  gap: 10,
                   justifyContent: 'flex-end',
-                  marginTop: 20,
+                  marginBottom: 2,
                 }}
               >
-                <div
-                  style={{
+                <Box
+                  sx={{
                     padding: '10px 20px',
-                    marginTop: 5,
                     background: '#006BD6',
-                    borderRadius: 10,
-                    lineHeight: 1.5,
-                    height: 'fit-content',
+                    borderRadius: 5,
+                    maxWidth: '80%',
                     color: 'white',
                   }}
                 >
-                  {post.message}
-                </div>
-              </div>
+                  <Typography variant="body1">{post.message}</Typography>
+                </Box>
+              </Box>
             )}
             {post.role === 'bot' && (
-              <div style={{display: 'flex', gap: 10}}>
-                <Image
-                  src="https://doodleipsum.com/700/avatar-2?i=0639d368201785f32891763286f61ca0"
-                  alt=""
-                  width={50}
-                  height={50}
-                />
-                <div
-                  style={{
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  marginBottom: 2,
+                }}
+              >
+                <Image src="/animal_parrot.png" alt="" width={50} height={50} />
+                <Box
+                  sx={{
                     padding: '10px 20px',
-                    marginTop: 5,
-                    background: '#fff',
-                    borderRadius: 10,
-                    lineHeight: 1.5,
-                    height: 'fit-content',
+                    background: '#dfe2e9',
+                    borderRadius: 5,
+                    maxWidth: '80%',
                   }}
                 >
                   {post.message}
-                </div>
-              </div>
+                </Box>
+              </Box>
             )}
-          </div>
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 
